@@ -47,3 +47,14 @@ The notebook ```readme.ipynb``` is mandatory, this will be used to generate the 
  * Automatic generation of README.md
  * Automatic index in html view
  * Compatibe with [Read the Docs](https://readthedocs.org/)
+
+# Troubleshooting
+
+**Index and Module Index is empty**:  
+Just add the target module to the ```PATH``` in the ```conf.py``` file.
+```
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath('relative_path_to_module'))
+```

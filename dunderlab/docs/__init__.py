@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 
 __version__ = '0.1'
@@ -32,12 +33,6 @@ def run_command(command):
         stderr=subprocess.PIPE,
     )
     return proc.communicate()[0]
-
-
-# ----------------------------------------------------------------------
-def update(lista, listb):
-    """"""
-    return list(set(lista + listb))
 
 
 # ----------------------------------------------------------------------
@@ -143,19 +138,17 @@ def setup(app):
     app.config.html_theme_options['nosidebar'] = bool(notebooks)
     app.config.html_theme_options['page_width'] = '980px'
 
-    app.config.extensions = update(
-        app.config.extensions,
-        [
-            'sphinx.ext.autodoc',
-            'sphinx.ext.napoleon',
-            'sphinx.ext.coverage',
-            'sphinx.ext.viewcode',
-            'sphinx.ext.autosectionlabel',
-            'sphinx.ext.todo',
-            'sphinx.ext.mathjax',
-            # 'sphinxcontrib.bibtex',
-        ],
-    )
+    app.config.extensions += [
+        'sphinx.ext.todo',
+        'sphinx.ext.viewcode',
+        'sphinx.ext.autodoc',
+        'sphinx.ext.napoleon',
+        'sphinx.ext.coverage',
+        'sphinx.ext.autosectionlabel',
+        'sphinx.ext.mathjax',
+        # 'sphinxcontrib.bibtex',
+    ]
+    app.config.extensions = list(set(app.config.extensions))
 
     app.config.naoleon_google_docstring = False
     app.config.napoleon_numpy_docstring = True
@@ -196,6 +189,7 @@ def setup(app):
     """
 
     # app.connect('config-inited', lambda *args, **kargs: build_index(app))
+    # app.connect('config-inited', build_index)
     app.connect('builder-inited', build_index)
 
     # app.config.bibtex_bibfiles = ['refs.bib']
