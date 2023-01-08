@@ -8,30 +8,23 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='dunderlab-docs',
-    version='0.1',
+    version='0.2',
     packages=['dunderlab.docs'],
-
     author='Yeison Cardona',
     author_email='yencardonaal@unal.edu.co',
     maintainer='Yeison Cardona',
     maintainer_email='yencardonaal@unal.edu.co',
-
     download_url='',
-
     install_requires=[
-
+        'nbsphinx',
     ],
-
     include_package_data=True,
     license='Simplified BSD License',
     description="",
     zip_safe=False,
-
     long_description=README,
     long_description_content_type='text/markdown',
-
     python_requires='>=3.6',
-
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -51,5 +44,4 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: System :: Hardware :: Hardware Drivers',
     ],
-
 )
