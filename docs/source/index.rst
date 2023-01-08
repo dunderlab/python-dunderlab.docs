@@ -18,4 +18,6 @@
     * :ref:`modindex`
     * :ref:`search`
 
+..
+  .. include:: notebooks/footer.rst
         
