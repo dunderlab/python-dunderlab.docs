@@ -64,9 +64,11 @@ def build_index(app, *args, **kwargs):
 
     notebooks = []
     for notebook in notebooks_list:
-        if notebook not in ['readme.ipynb', 'license.ipynb'] and notebook.endswith(
-            '.ipynb'
-        ):
+        if notebook not in [
+            'readme.ipynb',
+            # 'footer.ipynb',
+            'license.ipynb',
+        ] and notebook.endswith('.ipynb'):
             notebooks.append(f"{notebooks_dir}/{notebook.replace('.ipynb', '')}")
 
     if notebooks:
@@ -101,16 +103,22 @@ Navigation
     * :ref:`modindex`
     * :ref:`search`
 
+..
+  .. include:: {notebooks_dir}/footer.rst
         """
         )
 
     run_command(
         f'jupyter-nbconvert --to rst {os.path.join(notebooks_path, "readme.ipynb")}'
     )
-    print(
-        run_command(
-            f'jupyter-nbconvert --to markdown {os.path.join(notebooks_path, "readme.ipynb")} --output ../../../README.md'
-        )
+
+    # if os.path.exists(os.path.join(notebooks_path, "footer.ipynb")):
+    # run_command(
+    # f'jupyter-nbconvert --to rst {os.path.join(notebooks_path, "footer.ipynb")}'
+    # )
+
+    run_command(
+        f'jupyter-nbconvert --to markdown {os.path.join(notebooks_path, "readme.ipynb")} --output ../../../README.md'
     )
 
 
@@ -123,7 +131,15 @@ def setup(app):
     notebooks_dir = 'notebooks'
     notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))
     notebooks = filter(lambda f: f.endswith('.ipynb'), os.listdir(notebooks_path))
-    notebooks = filter(lambda f: not f in ['readme.ipynb', 'license.ipynb'], notebooks)
+    notebooks = filter(
+        lambda f: not f
+        in [
+            'readme.ipynb',
+            # 'footer.ipynb',
+            'license.ipynb',
+        ],
+        notebooks,
+    )
     app.config.html_theme_options['nosidebar'] = bool(notebooks)
     app.config.html_theme_options['page_width'] = '980px'
 
