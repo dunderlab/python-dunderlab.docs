@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 __version__ = '0.1'
 
@@ -21,33 +22,44 @@ EMPTY_NOTEBOOK = """
 """
 
 # ----------------------------------------------------------------------
+def run_command(command):
+    """This post save function creates a thumbnail for the commentary PDF"""
+    proc = subprocess.Popen(
+        command,
+        shell=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    return proc.communicate()[0]
+
+
+# ----------------------------------------------------------------------
 def update(lista, listb):
     """"""
     return list(set(lista + listb))
 
 
 # ----------------------------------------------------------------------
-def build_index(app):
+def build_index(app, *args, **kwargs):
     """"""
     notebooks_dir = 'notebooks'
-    notebooks_path = os.path.join(app.srcdir, notebooks_dir)
+    notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))
 
     if not os.path.exists(notebooks_path):
         os.makedirs(notebooks_path)
+
+        readme_file = os.path.join(notebooks_path, '01-getting_started.ipynb')
+        if not os.path.exists(readme_file):
+            with open(readme_file, 'w') as file:
+                file.write(EMPTY_NOTEBOOK.format('# Getting started'))
 
     readme_file = os.path.join(notebooks_path, 'readme.ipynb')
     if not os.path.exists(readme_file):
         with open(readme_file, 'w') as file:
             file.write(EMPTY_NOTEBOOK.format(f'# {app.config.project}'))
 
-    readme_file = os.path.join(notebooks_path, '01-getting_started.ipynb')
-    if not os.path.exists(readme_file):
-        with open(readme_file, 'w') as file:
-            file.write(EMPTY_NOTEBOOK.format('# Getting started'))
-
-    notebooks_list = os.listdir(
-        os.path.join(os.path.abspath(os.path.dirname(__file__)), notebooks_path)
-    )
+    notebooks_list = os.listdir(notebooks_path)
     notebooks_list = filter(lambda s: not s.startswith('__'), notebooks_list)
 
     notebooks = []
@@ -57,12 +69,22 @@ def build_index(app):
         ):
             notebooks.append(f"{notebooks_dir}/{notebook.replace('.ipynb', '')}")
 
+    if notebooks:
+        navigation_title = """
+Navigation
+==========
+        """
+    else:
+        navigation_title = ''
+
     notebooks = '\n   '.join(sorted(notebooks))
 
     with open(os.path.join(app.srcdir, 'index.rst'), 'w') as file:
         file.write(
             f"""
 .. include:: {notebooks_dir}/readme.rst
+
+{navigation_title}
 
 .. toctree::
    :maxdepth: 2
@@ -82,33 +104,28 @@ def build_index(app):
         """
         )
 
-
-# ----------------------------------------------------------------------
-def html_page_context(app, pagename, templatename, context, doctree):
-    """Add CSS string to HTML pages that contain code cells."""
-
-    # style = """
-
-    #
-
-    # """
-    context['body'] = '\n<style>a {color: #ff0000;}</style>\n' + context['body']
-
-    # print('*' * 70)
-    # print(context['body'])
+    run_command(
+        f'jupyter-nbconvert --to rst {os.path.join(notebooks_path, "readme.ipynb")}'
+    )
+    print(
+        run_command(
+            f'jupyter-nbconvert --to markdown {os.path.join(notebooks_path, "readme.ipynb")} --output ../../../README.md'
+        )
+    )
 
 
 # ----------------------------------------------------------------------
 def setup(app):
     """"""
+    app.config.html_theme_options['page_width'] = '1280px'
+    app.config.html_theme_options['sidebar_width'] = '300px'
 
-    app.add_config_value('dunderlab_accent', '#00acc1', rebuild='html')
-    # app.add_config_value('html_style', None, 'html', [list, str])
-
-    app.config.html_theme_options = {
-        'page_width': '1280px',
-        'sidebar_width': '300px',
-    }
+    notebooks_dir = 'notebooks'
+    notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))
+    notebooks = filter(lambda f: f.endswith('.ipynb'), os.listdir(notebooks_path))
+    notebooks = filter(lambda f: not f in ['readme.ipynb', 'license.ipynb'], notebooks)
+    app.config.html_theme_options['nosidebar'] = bool(notebooks)
+    app.config.html_theme_options['page_width'] = '980px'
 
     app.config.extensions = update(
         app.config.extensions,
@@ -160,17 +177,18 @@ def setup(app):
                 display: none;
         }
         </style>
-
-
     """
 
-    app.connect('config-inited', lambda *args, **kargs: build_index(app))
-    app.connect('html-page-context', html_page_context)
+    # app.connect('config-inited', lambda *args, **kargs: build_index(app))
+    app.connect('builder-inited', build_index)
 
     # app.config.bibtex_bibfiles = ['refs.bib']
 
-    # app.config.html_static_path = ['_static']
-    # app.add_css_file('custom.css')
+    app.add_css_file(
+        os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css'
+        )
+    )
 
     return {
         'version': __version__,
