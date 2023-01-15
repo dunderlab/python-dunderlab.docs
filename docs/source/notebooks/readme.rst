@@ -13,7 +13,7 @@ Instalation
 
 .. code:: ipython3
 
-    pip install -U dunderlab-docs
+    $ pip install -U dunderlab-docs
 
 Configuration
 -------------
@@ -67,7 +67,7 @@ Features
 Troubleshooting
 ===============
 
-| **Index and Module Index is empty**:
+| **Index and Module Index is empty:**
 | Just add the target module to the ``PATH`` in the ``conf.py`` file.
 
 ::
@@ -76,3 +76,22 @@ Troubleshooting
    import sys
 
    sys.path.insert(0, os.path.abspath('relative_path_to_module'))
+
+Recommendations
+===============
+
+**Add a custom command in** ``Makefile``\ **, to update modules from
+source code:**
+
+::
+
+   buildapi:
+       rm -f source/_modules/*
+       sphinx-apidoc -fMeETl -o source/_modules ../dunderlab/docs
+
+Then the documentation can be entirely updated and compiled with the
+command:
+
+::
+
+   $ make clean buildapi html

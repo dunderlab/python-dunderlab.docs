@@ -1,5 +1,4 @@
 import os
-import sys
 import subprocess
 
 __version__ = '0.1'
@@ -120,11 +119,12 @@ Navigation
 # ----------------------------------------------------------------------
 def setup(app):
     """"""
-    app.config.html_theme_options['page_width'] = '1280px'
-    app.config.html_theme_options['sidebar_width'] = '300px'
-
     notebooks_dir = 'notebooks'
     notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))
+
+    if not os.path.exists(notebooks_path):
+        os.makedirs(notebooks_path)
+
     notebooks = filter(lambda f: f.endswith('.ipynb'), os.listdir(notebooks_path))
     notebooks = filter(
         lambda f: not f
@@ -135,8 +135,21 @@ def setup(app):
         ],
         notebooks,
     )
-    app.config.html_theme_options['nosidebar'] = bool(notebooks)
-    app.config.html_theme_options['page_width'] = '980px'
+
+    notebooks = list(
+        filter(
+            lambda f: not f.startswith('__'),
+            notebooks,
+        )
+    )
+
+    if notebooks:
+        app.config.html_theme_options['nosidebar'] = False
+        app.config.html_theme_options['page_width'] = '1280px'
+        app.config.html_theme_options['sidebar_width'] = '300px'
+    else:
+        app.config.html_theme_options['nosidebar'] = True
+        app.config.html_theme_options['page_width'] = '980px'
 
     app.config.extensions += [
         'sphinx.ext.todo',
