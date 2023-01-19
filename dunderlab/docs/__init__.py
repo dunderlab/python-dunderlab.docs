@@ -28,8 +28,7 @@ EMPTY_NOTEBOOK = """
 }}
 """
 
-REQUIREMENTS = """
-ipython
+REQUIREMENTS = """ipython
 ipykernel
 nbsphinx
 sphinxcontrib-bibtex
