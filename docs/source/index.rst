@@ -10,7 +10,8 @@ Navigation
    :maxdepth: 2
    :name: mastertoc
 
-   notebooks/01-read_the_docs
+   notebooks/01-sphinx
+   notebooks/02-read_the_docs
 
 .. only:: html
 

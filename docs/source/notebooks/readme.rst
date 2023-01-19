@@ -18,9 +18,12 @@ Instalation
 Configuration
 -------------
 
-In the ``conf.py`` file (from
-`sphinx <https://www.sphinx-doc.org/en/master/usage/configuration.html#example-of-configuration-file>`__),
-add ``nbsphinx`` and ``dunderlab.docs`` to the list of extensions.
+| After to generate the `Sphinx
+  documentation <https://www.sphinx-doc.org/en/master/#>`__ via
+  `sphinx-quickstart <https://www.sphinx-doc.org/en/master/usage/quickstart.html>`__.
+| In the ``conf.py`` file (from
+  `sphinx <https://www.sphinx-doc.org/en/master/usage/configuration.html#example-of-configuration-file>`__),
+  add ``nbsphinx`` and ``dunderlab.docs`` to the list of extensions.
 
 .. code:: ipython3
 
