@@ -3,4 +3,4 @@ ipykernel
 nbsphinx
 sphinxcontrib-bibtex
 pygments
-dunderlab-docs
+dunderlab-docs==0.4
