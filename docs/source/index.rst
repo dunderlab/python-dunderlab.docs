@@ -2,12 +2,15 @@
 .. include:: notebooks/readme.rst
 
 
+Navigation
+==========
+        
 
 .. toctree::
    :maxdepth: 2
    :name: mastertoc
 
-   
+   notebooks/01-read_the_docs
 
 .. only:: html
 
