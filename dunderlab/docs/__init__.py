@@ -5,6 +5,7 @@ Dunderlab - Documentation
 
 """
 import os
+import shutil
 import subprocess
 import typing
 
@@ -231,11 +232,16 @@ def setup(app) -> dict:
 
     # app.config.bibtex_bibfiles = ['refs.bib']
 
-    app.add_css_file(
-        os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css'
-        )
-    )
+    # app.add_css_file(
+        # os.path.join(
+            # os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css'
+        # )
+    # )
+
+    target = os.path.abspath(os.path.join(app.srcdir, '_static', 'dunderlab_custom.css'))
+    source = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css')
+    shutil.copyfile(source, target)
+    app.add_css_file('dunderlab_custom.css')
 
     return {
         'version': __version__,
