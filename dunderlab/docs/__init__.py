@@ -1,5 +1,12 @@
+"""
+=========================
+Dunderlab - Documentation
+=========================
+
+"""
 import os
 import subprocess
+import typing
 
 __version__ = '0.1'
 
@@ -21,9 +28,28 @@ EMPTY_NOTEBOOK = """
 }}
 """
 
+REQUIREMENTS = """
+ipython
+ipykernel
+nbsphinx
+sphinxcontrib-bibtex
+pygments
+"""
+
+PathLike = typing.Union[str, bytes, os.PathLike]
+
+
 # ----------------------------------------------------------------------
-def run_command(command):
-    """This post save function creates a thumbnail for the commentary PDF"""
+def write_file(filename: PathLike, content: str) -> None:
+    """If ```filename``` does not exist then create one with ```content``` in it."""
+    if not os.path.exists(filename):
+        with open(filename, 'w') as file:
+            file.write(content)
+
+
+# ----------------------------------------------------------------------
+def run_command(command: str) -> str:
+    """Run a command."""
     proc = subprocess.Popen(
         command,
         shell=True,
@@ -35,23 +61,21 @@ def run_command(command):
 
 
 # ----------------------------------------------------------------------
-def build_index(app, *args, **kwargs):
+def build_index(app, *args, **kwargs) -> None:
     """"""
+    requirements = os.path.abspath(os.path.join(os.path.dirname(app.srcdir), 'requirements'))
+    write_file(requirements, REQUIREMENTS)
+
     notebooks_dir = 'notebooks'
     notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))
 
     if not os.path.exists(notebooks_path):
         os.makedirs(notebooks_path)
-
-        readme_file = os.path.join(notebooks_path, '01-getting_started.ipynb')
-        if not os.path.exists(readme_file):
-            with open(readme_file, 'w') as file:
-                file.write(EMPTY_NOTEBOOK.format('# Getting started'))
+        getting_started = os.path.join(notebooks_path, '01-getting_started.ipynb')
+        write_file(getting_started, EMPTY_NOTEBOOK.format('# Getting started'))
 
     readme_file = os.path.join(notebooks_path, 'readme.ipynb')
-    if not os.path.exists(readme_file):
-        with open(readme_file, 'w') as file:
-            file.write(EMPTY_NOTEBOOK.format(f'# {app.config.project}'))
+    write_file(readme_file, EMPTY_NOTEBOOK.format(f'# {app.config.project}'))
 
     notebooks_list = os.listdir(notebooks_path)
     notebooks_list = filter(lambda s: not s.startswith('__'), notebooks_list)
@@ -117,7 +141,7 @@ Navigation
 
 
 # ----------------------------------------------------------------------
-def setup(app):
+def setup(app) -> dict:
     """"""
     notebooks_dir = 'notebooks'
     notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))
