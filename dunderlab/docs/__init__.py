@@ -34,6 +34,7 @@ ipykernel
 nbsphinx
 sphinxcontrib-bibtex
 pygments
+dunderlab-docs
 """
 
 PathLike = typing.Union[str, bytes, os.PathLike]
