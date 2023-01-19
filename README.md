@@ -11,6 +11,7 @@ $ pip install -U dunderlab-docs
 
 ## Configuration
 
+After to generate the [Sphinx documentation](https://www.sphinx-doc.org/en/master/#) via [sphinx-quickstart](https://www.sphinx-doc.org/en/master/usage/quickstart.html).  
 In the ```conf.py``` file (from [sphinx](https://www.sphinx-doc.org/en/master/usage/configuration.html#example-of-configuration-file)), add ```nbsphinx``` and ```dunderlab.docs``` to the list of extensions.
 
 
