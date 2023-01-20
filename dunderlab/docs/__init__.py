@@ -238,6 +238,9 @@ def setup(app) -> dict:
         # )
     # )
 
+    if not os.path.exists(os.path.abspath(os.path.join(app.srcdir, '_static'))):
+        os.mkdir(os.path.abspath(os.path.join(app.srcdir, '_static')))
+
     target = os.path.abspath(os.path.join(app.srcdir, '_static', 'dunderlab_custom.css'))
     source = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css')
     shutil.copyfile(source, target)
