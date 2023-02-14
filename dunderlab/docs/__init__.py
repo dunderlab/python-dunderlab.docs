@@ -168,14 +168,6 @@ def setup(app) -> dict:
         )
     )
 
-    if notebooks:
-        app.config.html_theme_options['nosidebar'] = False
-        app.config.html_theme_options['page_width'] = '1280px'
-        app.config.html_theme_options['sidebar_width'] = '300px'
-    else:
-        app.config.html_theme_options['nosidebar'] = True
-        app.config.html_theme_options['page_width'] = '980px'
-
     app.config.extensions += [
         'sphinx.ext.todo',
         'sphinx.ext.viewcode',
