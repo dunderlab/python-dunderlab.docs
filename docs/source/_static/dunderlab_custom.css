@@ -19,15 +19,14 @@ div.nbinput.container div.input_area {
 
 a.reference {
     border-bottom: 1px dotted #00acc1;
+    color: #00acc1;
 }
 
 a.reference:hover {
-    border-bottom: 1px solid #00acc1;
+    border-bottom: 1px solid #007887;
+    color: #007887;
 }
 
-a:hover {
-    color: #00acc1;
-}
 
 
 h1 {
@@ -86,9 +85,18 @@ dl:not(.docutils) dl dt {
         color: #555;
 }
 
-
-
 .body > .highlight-ipython3 {
     display: none;
 }
 
+.toctree-wrapper .caption-text {
+    font-size: 30.6px;
+    font-family: Noto Sans;
+    font-weight: normal;
+    margin: 30px 0px 10px 0px;
+    padding: 0;
+}
+
+.sphinxsidebarwrapper p.caption{
+    font-size: 20px;
+}

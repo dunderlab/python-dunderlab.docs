@@ -2,8 +2,8 @@
 .. include:: notebooks/readme.rst
 
 
-Navigation
-==========
+Documentation Overview
+======================
         
 
 .. toctree::
@@ -13,15 +13,15 @@ Navigation
    notebooks/01-sphinx
    notebooks/02-read_the_docs
 
-.. only:: html
 
-    Docstrings
-    ==========
 
-    * :ref:`genindex`
-    * :ref:`modindex`
-    * :ref:`search`
 
-..
-  .. include:: notebooks/footer.rst
+
+
+
+
+.. container:: dunderlab-footer
+
+    .. include:: notebooks/footer.rst
+
         

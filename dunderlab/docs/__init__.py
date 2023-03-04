@@ -62,6 +62,34 @@ def run_command(command: str) -> str:
 
 
 # ----------------------------------------------------------------------
+def format_file(filepath, context):
+    """"""
+
+    with open(filepath, 'r') as file:
+        content = file.read()
+
+    with open(filepath, 'w') as file:
+        file.write(content.format(**context))
+
+
+# ----------------------------------------------------------------------
+def darker_color(color, darker_factor):
+    """
+    Returns a darker version of a given color in hexadecimal format.
+    The darker_factor parameter must be between 0 and 1, where 0 is the same color
+    and 1 is black.
+    """
+    # Convert the color to its RGB components
+    r, g, b = int(color[1:3], 16), int(color[3:5], 16), int(color[5:7], 16)
+    # Calculate the new RGB values
+    r_new = int(r * (1 - darker_factor))
+    g_new = int(g * (1 - darker_factor))
+    b_new = int(b * (1 - darker_factor))
+    # Convert the new RGB values to hexadecimal format and return the new color
+    return '#{:02x}{:02x}{:02x}'.format(r_new, g_new, b_new)
+
+
+# ----------------------------------------------------------------------
 def build_index(app, *args, **kwargs) -> None:
     """"""
     requirements = os.path.abspath(os.path.join(os.path.dirname(app.srcdir), 'requirements'))
@@ -85,20 +113,36 @@ def build_index(app, *args, **kwargs) -> None:
     for notebook in notebooks_list:
         if notebook not in [
             'readme.ipynb',
-            # 'footer.ipynb',
+            'footer.ipynb',
             'license.ipynb',
         ] and notebook.endswith('.ipynb'):
             notebooks.append(f"{notebooks_dir}/{notebook.replace('.ipynb', '')}")
 
+    dunderlab_custom_index = app.config.dunderlab_custom_index
+
     if notebooks:
         navigation_title = """
-Navigation
-==========
+Documentation Overview
+======================
         """
     else:
         navigation_title = ''
-
     notebooks = '\n   '.join(sorted(notebooks))
+
+    if app.config.dunderlab_code_reference:
+
+        code_reference = """
+.. only:: html
+
+    Code Reference
+    ==============
+
+    * :ref:`genindex`
+    * :ref:`modindex`
+    * :ref:`search`
+       """
+    else:
+        code_reference = ""
 
     with open(os.path.join(app.srcdir, 'index.rst'), 'w') as file:
         file.write(
@@ -113,17 +157,17 @@ Navigation
 
    {notebooks}
 
-.. only:: html
+{dunderlab_custom_index}
 
-    Docstrings
-    ==========
+{code_reference}
 
-    * :ref:`genindex`
-    * :ref:`modindex`
-    * :ref:`search`
 
-..
-  .. include:: {notebooks_dir}/footer.rst
+
+
+.. container:: dunderlab-footer
+
+    .. include:: {notebooks_dir}/footer.rst
+
         """
         )
 
@@ -131,10 +175,18 @@ Navigation
         f'jupyter-nbconvert --to rst {os.path.join(notebooks_path, "readme.ipynb")}'
     )
 
-    # if os.path.exists(os.path.join(notebooks_path, "footer.ipynb")):
-    # run_command(
-    # f'jupyter-nbconvert --to rst {os.path.join(notebooks_path, "footer.ipynb")}'
-    # )
+    if os.path.exists(os.path.join(notebooks_path, "footer.ipynb")):
+        run_command(
+            f'jupyter-nbconvert --to rst {os.path.join(notebooks_path, "footer.ipynb")}'
+        )
+
+    if os.path.exists(os.path.join(notebooks_path, "license.ipynb")):
+        run_command(
+            f'jupyter-nbconvert --to markdown {os.path.join(notebooks_path, "license.ipynb")} --output ../../../LICENSE.md'
+        )
+        run_command(
+            f'mv ../../../LICENSE.md ../../../LICENSE'
+        )
 
     run_command(
         f'jupyter-nbconvert --to markdown {os.path.join(notebooks_path, "readme.ipynb")} --output ../../../README.md'
@@ -142,8 +194,25 @@ Navigation
 
 
 # ----------------------------------------------------------------------
+def build_features(app, *args, **kwargs) -> None:
+    """"""
+    target = os.path.abspath(os.path.join(app.srcdir, '_static', 'dunderlab_custom.css'))
+    source = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css')
+    shutil.copyfile(source, target)
+    context = {
+        'dunderlab_color_links': app.config.dunderlab_color_links,
+        'dunderlab_color_links__darker': darker_color(app.config.dunderlab_color_links, 0.3),
+    }
+    format_file(target, context)
+
+
+# ----------------------------------------------------------------------
 def setup(app) -> dict:
     """"""
+    app.add_config_value('dunderlab_custom_index', '', rebuild='env')
+    app.add_config_value('dunderlab_color_links', '#00acc1', rebuild='html')
+    app.add_config_value('dunderlab_code_reference', True, rebuild='html')
+
     notebooks_dir = 'notebooks'
     notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))
 
@@ -155,7 +224,7 @@ def setup(app) -> dict:
         lambda f: not f
         in [
             'readme.ipynb',
-            # 'footer.ipynb',
+            'footer.ipynb',
             'license.ipynb',
         ],
         notebooks,
@@ -221,6 +290,7 @@ def setup(app) -> dict:
     # app.connect('config-inited', lambda *args, **kargs: build_index(app))
     # app.connect('config-inited', build_index)
     app.connect('builder-inited', build_index)
+    app.connect('builder-inited', build_features)
 
     # app.config.bibtex_bibfiles = ['refs.bib']
 
@@ -233,9 +303,16 @@ def setup(app) -> dict:
     if not os.path.exists(os.path.abspath(os.path.join(app.srcdir, '_static'))):
         os.mkdir(os.path.abspath(os.path.join(app.srcdir, '_static')))
 
-    target = os.path.abspath(os.path.join(app.srcdir, '_static', 'dunderlab_custom.css'))
-    source = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css')
-    shutil.copyfile(source, target)
+    # target = os.path.abspath(os.path.join(app.srcdir, '_static', 'dunderlab_custom.css'))
+    # source = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css')
+    # shutil.copyfile(source, target)
+
+    # context = {
+        # 'dunderlab_color_links': app.config.dunderlab_color_links,
+        # 'dunderlab_color_links__darker': darker_color(app.config.dunderlab_color_links, 0.3),
+    # }
+    # format_file(target, context)
+
     app.add_css_file('dunderlab_custom.css')
 
     return {
