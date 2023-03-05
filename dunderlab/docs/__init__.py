@@ -144,6 +144,15 @@ Documentation Overview
     else:
         code_reference = ""
 
+    if os.path.exists(os.path.join(notebooks_path, "footer.ipynb")):
+        dunderlab_footer = f"""
+        .. container:: dunderlab-footer
+
+            .. include:: {notebooks_dir}/footer.rst
+        """
+    else:
+        dunderlab_footer = ''
+
     with open(os.path.join(app.srcdir, 'index.rst'), 'w') as file:
         file.write(
             f"""
@@ -161,13 +170,7 @@ Documentation Overview
 
 {code_reference}
 
-
-
-
-.. container:: dunderlab-footer
-
-    .. include:: {notebooks_dir}/footer.rst
-
+{dunderlab_footer}
         """
         )
 
@@ -192,6 +195,15 @@ Documentation Overview
         f'jupyter-nbconvert --to markdown {os.path.join(notebooks_path, "readme.ipynb")} --output ../../../README.md'
     )
 
+    if app.config.dunderlab_github_repository:
+
+        with open('../README.md', 'r') as file:
+            content = file.read()
+        content = content.replace(
+            '(_images/', f'({app.config.dunderlab_github_repository}/blob/master/docs/source/notebooks/_images/')
+        with open('../README.md', 'w') as file:
+            file.write(content)
+
 
 # ----------------------------------------------------------------------
 def build_features(app, *args, **kwargs) -> None:
@@ -212,6 +224,7 @@ def setup(app) -> dict:
     app.add_config_value('dunderlab_custom_index', '', rebuild='env')
     app.add_config_value('dunderlab_color_links', '#00acc1', rebuild='html')
     app.add_config_value('dunderlab_code_reference', True, rebuild='html')
+    app.add_config_value('dunderlab_github_repository', '', rebuild='html')
 
     notebooks_dir = 'notebooks'
     notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))

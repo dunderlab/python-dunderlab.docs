@@ -18,10 +18,4 @@ Documentation Overview
 
 
 
-
-
-.. container:: dunderlab-footer
-
-    .. include:: notebooks/footer.rst
-
         

@@ -100,3 +100,12 @@ dl:not(.docutils) dl dt {
 .sphinxsidebarwrapper p.caption{
     font-size: 20px;
 }
+
+.dunderlab-footer {
+    margin-top: 80px;
+    background-color: #7878780d;
+    padding: 30px;
+    border: 1px solid #00acc1;
+    border-width: 3px 0 0 0;
+    border-radius: 5px;
+}
