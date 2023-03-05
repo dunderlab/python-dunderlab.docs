@@ -89,6 +89,12 @@ generation.
 
     dunderlab_code_reference = False
 
+``dunderlab_github_repository``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This configuration specifies the project repository, which will be used
+to adjust the URLs of the images in the ``README.md`` file.
+
 Notebooks
 ---------
 
@@ -174,6 +180,10 @@ Troubleshooting
    import sys
 
    sys.path.insert(0, os.path.abspath('relative_path_to_module'))
+
+| **Images in README.md are not visible:**
+| The images used in the ``readme.ipynb`` notebook should be placed in a
+  folder called ``_images``.
 
 Recommendations
 ===============

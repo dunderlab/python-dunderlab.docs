@@ -200,7 +200,7 @@ Documentation Overview
         with open('../README.md', 'r') as file:
             content = file.read()
         content = content.replace(
-            '(_images/', f'({app.config.dunderlab_github_repository}/blob/master/docs/source/notebooks/_images/')
+            '(_images/', f'({app.config.dunderlab_github_repository}/raw/main/docs/source/notebooks/_images/')
         with open('../README.md', 'w') as file:
             file.write(content)
 
