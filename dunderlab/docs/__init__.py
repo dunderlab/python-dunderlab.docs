@@ -195,7 +195,7 @@ Documentation Overview
         f'jupyter-nbconvert --to markdown {os.path.join(notebooks_path, "readme.ipynb")} --output ../../../README.md'
     )
 
-    if app.config.dunderlab_github_repository:
+    if app.config.dunderlab_github_repository and os.path.exists('../README.md'):
 
         with open('../README.md', 'r') as file:
             content = file.read()
