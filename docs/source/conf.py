@@ -39,5 +39,12 @@ exclude_patterns = []
 html_theme = 'alabaster'
 html_static_path = ['_static']
 
+html_theme_options = {
+    'caption_font_family': 'Noto Sans',
+    'font_family': 'Noto Sans',
+    'head_font_family': 'Noto Sans',
+    'page_width': '1280px',
+    'sidebar_width': '300px',
+}
 
 dunderlab_code_reference = False
