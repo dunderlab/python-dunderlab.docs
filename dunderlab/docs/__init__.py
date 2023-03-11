@@ -146,9 +146,9 @@ Documentation Overview
 
     if os.path.exists(os.path.join(notebooks_path, "footer.ipynb")):
         dunderlab_footer = f"""
-        .. container:: dunderlab-footer
+.. container:: dunderlab-footer
 
-            .. include:: {notebooks_dir}/footer.rst
+    .. include:: {notebooks_dir}/footer.rst
         """
     else:
         dunderlab_footer = ''
