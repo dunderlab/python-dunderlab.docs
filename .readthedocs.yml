@@ -1,7 +1,7 @@
 version: 2
 formats: all
 python:
-  version: 3
+  version: "3.11"
   install:
     - requirements: docs/requirements
-  system_packages: true 
+  system_packages: true
