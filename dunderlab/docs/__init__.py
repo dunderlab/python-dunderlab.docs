@@ -161,7 +161,7 @@ Documentation Overview
 {navigation_title}
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: {app.config.dunderlab_maxdepth}
    :name: mastertoc
 
    {notebooks}
@@ -225,6 +225,7 @@ def setup(app) -> dict:
     app.add_config_value('dunderlab_color_links', '#00acc1', rebuild='html')
     app.add_config_value('dunderlab_code_reference', True, rebuild='html')
     app.add_config_value('dunderlab_github_repository', '', rebuild='html')
+    app.add_config_value('dunderlab_maxdepth', '2', rebuild='html')
 
     notebooks_dir = 'notebooks'
     notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))
