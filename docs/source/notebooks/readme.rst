@@ -1,5 +1,5 @@
-DunderLab-Docs
-==============
+DunderLab’s Documentation Guide
+===============================
 
 This Python module allows to create `Sphinx
 Documntation <https://www.sphinx-doc.org/en/master/>`__ from simple

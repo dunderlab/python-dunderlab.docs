@@ -69,6 +69,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
+docs/_build/
 docs/build/
 
 # PyBuilder
@@ -127,3 +128,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Temporal and hidden files
+*~
+.*
+
+# Projects and Dataformats
+*.wpr
+*.wpu
+*.h5
+
+test/my_theme.xml
+sandbox
+.apk

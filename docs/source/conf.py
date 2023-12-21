@@ -49,4 +49,4 @@ html_theme_options = {
     'sidebar_width': '300px',
 }
 
-dunderlab_code_reference = False
+dunderlab_code_reference = True

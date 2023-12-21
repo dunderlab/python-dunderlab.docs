@@ -104,7 +104,7 @@ dl:not(.docutils) dl dt {{
 .dunderlab-footer {{
     margin-top: 80px;
     background-color: #7878780d;
-    padding: 30px;
+    padding: 15px 30px;
     border: 1px solid {dunderlab_color_links};
     border-width: 3px 0 0 0;
     border-radius: 5px;
