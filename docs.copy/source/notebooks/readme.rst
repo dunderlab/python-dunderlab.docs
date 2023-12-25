@@ -184,3 +184,22 @@ Troubleshooting
 | **Images in README.md are not visible:**
 | The images used in the ``readme.ipynb`` notebook should be placed in a
   folder called ``_images``.
+
+Recommendations
+===============
+
+**Add a custom command in** ``Makefile``\ **, to update modules from
+source code:**
+
+::
+
+   buildapi:
+       rm -f source/_modules/*
+       sphinx-apidoc -fMeETl -o source/_modules ../dunderlab/docs
+
+Then the documentation can be entirely updated and compiled with the
+command:
+
+::
+
+   $ make clean buildapi html

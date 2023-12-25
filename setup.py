@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='dunderlab-docs',
-    version='0.14',
+    version='0.15',
     packages=['dunderlab.docs', 'dunderlab.docs.static'],
     author='Yeison Cardona',
     author_email='yencardonaal@unal.edu.co',
@@ -17,6 +17,9 @@ setup(
     download_url='',
     install_requires=[
         'nbsphinx',
+    ],
+    scripts=[
+       "cmd/dunderlab_docs",
     ],
     include_package_data=True,
     license='Simplified BSD License',

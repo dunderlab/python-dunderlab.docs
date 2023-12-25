@@ -11,8 +11,7 @@ Documentation Overview
    :name: mastertoc
 
    notebooks/01-sphinx
-   notebooks/02-docker
-   notebooks/03-read_the_docs
+   notebooks/02-read_the_docs
 
 
 
