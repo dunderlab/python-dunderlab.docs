@@ -32,7 +32,7 @@ extensions = [
 templates_path = ['_templates']
 exclude_patterns = []
 
-html_logo = '_static/molino.png'
+html_logo = '_static/logo.svg'
 html_favicon = '_static/favicon.ico'
 
 # -- Options for HTML output -------------------------------------------------
@@ -49,4 +49,5 @@ html_theme_options = {
     'sidebar_width': '300px',
 }
 
+dunderlab_color_links = '#FC4DB5'
 dunderlab_code_reference = True

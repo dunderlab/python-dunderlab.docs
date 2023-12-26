@@ -7,7 +7,7 @@ pre.literal-block,
 }
 
 .docutils.literal {
-    color: #00acc1;
+    color: #FC4DB5;
     padding: 1px 4px;
     margin: 0 -2px;
     border-radius: 2px;
@@ -18,13 +18,13 @@ div.nbinput.container div.input_area {
 }
 
 a.reference {
-    border-bottom: 1px dotted #00acc1;
-    color: #00acc1;
+    border-bottom: 1px dotted #FC4DB5;
+    color: #FC4DB5;
 }
 
 a.reference:hover {
-    border-bottom: 1px solid #007887;
-    color: #007887;
+    border-bottom: 1px solid #b0357e;
+    color: #b0357e;
 }
 
 
@@ -105,7 +105,7 @@ dl:not(.docutils) dl dt {
     margin-top: 80px;
     background-color: #7878780d;
     padding: 15px 30px;
-    border: 1px solid #00acc1;
+    border: 1px solid #FC4DB5;
     border-width: 3px 0 0 0;
     border-radius: 5px;
 }

@@ -1,12 +1,12 @@
 DunderLab’s Documentation Guide
 ===============================
 
-This Python module allows to create `Sphinx
-Documntation <https://www.sphinx-doc.org/en/master/>`__ from simple
-`Jupyter Notebooks <https://jupyter.org/>`__. Is basically a
-preconfigured environment that use
-`nbsphinx <https://nbsphinx.readthedocs.io/>`__ in background with a set
-of custom styles and preloaded modules.
+This Python module facilitates the creation of `Sphinx
+Documntation <https://www.sphinx-doc.org/en/master/>`__ directly from
+`Jupyter Notebooks <https://jupyter.org/>`__. Essentially, it provides a
+preconfigured environment that utilizes
+`nbsphinx <https://nbsphinx.readthedocs.io/>`__ in the background,
+complete with custom styles and preloaded modules.
 
 Installation
 ------------
@@ -15,12 +15,13 @@ Installation
 
     $ pip install -U dunderlab-docs
 
-| After to generate the `Sphinx
-  documentation <https://www.sphinx-doc.org/en/master/#>`__ via
-  `sphinx-quickstart <https://www.sphinx-doc.org/en/master/usage/quickstart.html>`__.
-| In the ``conf.py`` file (from
-  `sphinx <https://www.sphinx-doc.org/en/master/usage/configuration.html#example-of-configuration-file>`__),
-  add ``nbsphinx`` and ``dunderlab.docs`` to the list of extensions.
+To generate `Sphinx
+documentation <https://www.sphinx-doc.org/en/master/#>`__, start with
+the
+`sphinx-quickstart <https://www.sphinx-doc.org/en/master/usage/quickstart.html>`__
+command. Then, in the Sphinx ``conf.py`` file, add
+‘`sphinx <https://www.sphinx-doc.org/en/master/usage/configuration.html#example-of-configuration-file>`__’
+and ``dunderlab.docs`` to the extensions list.
 
 .. code:: ipython3
 
@@ -35,9 +36,9 @@ Configuration
 ``dunderlab_custom_index``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Can be used to insert custom ReStructuredText index the ``ìndex.rst``
-file, this one will be rendered after the main index, and also in the
-sidebar.
+This setting allows you to insert a custom ReStructuredText into the
+``index.rst`` file. This custom index will be rendered following the
+main index and will also appear in the sidebar.
 
 .. code:: ipython3
 
@@ -63,14 +64,11 @@ sidebar.
 ``dunderlab_color_links``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can customize the appearance of your documentation by changing the
-color of the links. This can help give your documentation a bit of
-personality and make it more visually appealing. This will change the
-color of all links in your documentation to blue. You can experiment
-with different colors and styles to find the look that best suits your
-needs. Keep in mind that modifying the stylesheet will affect the
-appearance of your entire documentation, so make sure to test your
-changes thoroughly before publishing your documentation.
+Customize your documentation’s appearance by altering the link colors.
+For instance, setting ``dunderlab_color_links`` to ``#4db6ac`` changes
+all links to a blue shade, adding a unique touch to your documentation.
+Remember, changes to the stylesheet impact the entire documentation, so
+test thoroughly before publishing.
 
 .. code:: ipython3
 
@@ -117,11 +115,11 @@ it.
    ->          readme.ipynb
    ->          __sandbox.ipynb
 
-The notebook ``readme.ipynb`` is mandatory, this will be used to
-generate the ``README.md`` in the root of the Python package. All
-documentation notebooks are sortered by name, so, is recommendable to
-name then with numeric prefixes. Notebooks names that starts with ``__``
-will not be rendered into the documentation.
+The ``readme.ipynb`` notebook is mandatory, as it generates the
+``README.md`` file in the root of the Python package. Documentation
+notebooks should be named with numeric prefixes for sorting purposes.
+Notebooks named with ``__`` prefixes won’t be rendered into the
+documentation.
 
 Special Notebooks names
 -----------------------
@@ -171,16 +169,20 @@ Features
 Troubleshooting
 ===============
 
-| **Index and Module Index is empty:**
-| Just add the target module to the ``PATH`` in the ``conf.py`` file.
+| **If the Index and Module Index appear empty:**
+| Resolve this by adding the target module’s path to the PATH variable
+  in the ``conf.py`` file
 
-::
+.. code:: python
 
    import os
    import sys
 
    sys.path.insert(0, os.path.abspath('relative_path_to_module'))
 
-| **Images in README.md are not visible:**
+| **If images aren’t visible in the readmereadme.md file:**
+| Verify their paths to ensure they’re accessible from the GitHub
+  repository. Relative paths must be correctly set relative to the
+  ``README.md`` file’s location.
 | The images used in the ``readme.ipynb`` notebook should be placed in a
   folder called ``_images``.
