@@ -2,7 +2,7 @@ DunderLab’s Documentation Guide
 ===============================
 
 This Python module facilitates the creation of `Sphinx
-Documntation <https://www.sphinx-doc.org/en/master/>`__ directly from
+Documentation <https://www.sphinx-doc.org/en/master/>`__ directly from
 `Jupyter Notebooks <https://jupyter.org/>`__. Essentially, it provides a
 preconfigured environment that utilizes
 `nbsphinx <https://nbsphinx.readthedocs.io/>`__ in the background,
