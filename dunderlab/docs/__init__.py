@@ -29,6 +29,16 @@ EMPTY_NOTEBOOK = """
 }}
 """
 
+REQUIREMENTS = """sphinx==7.0.0
+urllib3<2.0
+ipython
+ipykernel
+nbsphinx
+sphinxcontrib-bibtex
+pygments
+dunderlab-docs
+"""
+
 
 PathLike = typing.Union[str, bytes, os.PathLike]
 
