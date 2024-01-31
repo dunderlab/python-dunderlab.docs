@@ -50,7 +50,15 @@ def run_docker_command(image: str, command: str, volumes: str) -> None:
     -------
     >>> run_docker_command("python:3.8", "echo Hello, World!", "/myhostpath:/mycontainerpath")
     """
-    os.system(f"docker run --rm -u $(id -u):$(id -g) {volumes} {image} {command}")
+    try:
+        args = parse_arguments().args
+        arguments = args[1]
+    except:
+        arguments = ''
+
+    instruction = f"docker run --rm -u $(id -u):$(id -g) {volumes} {image} {command} {arguments}"
+    print(f'Running: {instruction}')
+    os.system(instruction)
 
 
 # ----------------------------------------------------------------------
@@ -75,7 +83,7 @@ def main():
             os.mkdir('docs')
 
         if command == 'quickstart':
-            run_docker_command(image, 'sphinx-quickstart', '-v ./docs:/docs')
+            run_docker_command(image, 'sphinx-quickstart', f'-v ./docs:/mnt/docs -w /mnt/docs')
 
         elif command == 'apidoc':
             handle_apidoc_command(args, image)
@@ -104,7 +112,7 @@ def handle_apidoc_command(args: list[str], image: str) -> None:
     """
     if len(args) > 1:
         module = args[1]
-        run_docker_command(image, f'sphinx-apidoc -fMeETl -o source/_modules ../{module}', f'-v ./docs:/docs -v ./{module}:/{module}')
+        run_docker_command(image, f'sphinx-apidoc -fMeETl -o source/_modules ../{module}', f'-v ./docs:/mnt/docs -v ./:/mnt -w /mnt/docs')
     else:
         print('Module name must be specified for apidoc.')
 
@@ -124,9 +132,9 @@ def handle_build_command(args: list[str], image: str) -> None:
     if len(args) > 2:
         format_, module = args[1], args[2]
         if format_ == 'latexpdf':
-            run_docker_command('sphinxdoc/sphinx-latexpdf', 'sphinx-build -M latexpdf source build', '-v ./docs:/docs -v ./{module}:/{module}')
+            run_docker_command('sphinxdoc/sphinx-latexpdf', 'sphinx-build -M latexpdf source build', f'-v .:/mnt -w /mnt/docs')
         elif format_ in ['html', 'epub']:
-            run_docker_command(image, f'sphinx-build -M {format_} source build', '-v ./docs:/docs -v ./{module}:/{module}')
+            run_docker_command(image, f'sphinx-build -M {format_} source build', f'-v ./:/mnt -w /mnt/docs')
         else:
             print('Invalid output format specified for build.')
     else:
