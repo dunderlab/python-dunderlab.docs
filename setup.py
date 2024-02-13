@@ -8,8 +8,8 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='dunderlab-docs',
-    version='0.25',
-    packages=['dunderlab.docs', 'dunderlab.docs.static'],
+    version='0.28',
+    packages=['dunderlab.docs', 'dunderlab.docs.static', 'dunderlab.utils'],
     author='Yeison Cardona',
     author_email='yencardonaal@unal.edu.co',
     maintainer='Yeison Cardona',
@@ -17,6 +17,8 @@ setup(
     download_url='',
     install_requires=[
         'nbsphinx',
+        'ipython-secrets',
+        'keyrings.alt',
     ],
     scripts=[
        "cmd/dunderlab_docs",
