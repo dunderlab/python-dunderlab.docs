@@ -1,3 +1,8 @@
+:root {
+  --accent: #FC4DB5;
+  --accent: #FC4DB5;
+}
+
 pre.literal-block,
 .highlight pre {
     background-color: #fbfbfb;

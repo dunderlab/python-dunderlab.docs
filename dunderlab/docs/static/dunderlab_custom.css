@@ -1,3 +1,8 @@
+:root {{
+  --accent: {dunderlab_color_links};
+  --accent_dark: {dunderlab_color_links__darker};
+}}
+
 pre.literal-block,
 .highlight pre {{
     background-color: #fbfbfb;

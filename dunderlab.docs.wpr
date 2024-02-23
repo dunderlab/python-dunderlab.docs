@@ -1,12 +1,14 @@
 #!wing
-#!version=9.0
+#!version=10.0
 ##################################################################
 # Wing project file                                              #
 ##################################################################
 [project attributes]
 proj.directory-list = [{'dirloc': loc('.'),
-                        'excludes': ['build',
-                                     'dist'],
+                        'excludes': ['dist',
+                                     'build',
+                                     'dunderlab_docs.egg-info',
+                                     'python-dunderlab.docs'],
                         'filter': '*',
                         'include_hidden': False,
                         'recursive': True,

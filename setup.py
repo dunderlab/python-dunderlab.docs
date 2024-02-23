@@ -8,14 +8,24 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='dunderlab-docs',
-    version='1.0',
-    packages=['dunderlab.docs', 'dunderlab.docs.static', 'dunderlab.utils'],
+    version='1.11',
+    packages=['dunderlab.docs', 'dunderlab.docs.static'],
     author='Yeison Cardona',
     author_email='yencardonaal@unal.edu.co',
     maintainer='Yeison Cardona',
     maintainer_email='yencardonaal@unal.edu.co',
     download_url='',
     install_requires=[
+        'nbsphinx',
+        # 'sphinx==7.0.0',
+        # 'urllib3<2.0',
+        'sphinx',
+        'urllib3',
+        'ipython',
+        'ipykernel',
+        'sphinxcontrib-bibtex',
+        'pygments',
+        'dunderlab-docs',
     ],
     scripts=[
        "cmd/dunderlab_docs",
@@ -26,7 +36,7 @@ setup(
     zip_safe=False,
     long_description=README,
     long_description_content_type='text/markdown',
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

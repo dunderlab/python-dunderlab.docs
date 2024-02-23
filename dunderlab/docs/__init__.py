@@ -95,7 +95,8 @@ def darker_color(color, darker_factor):
 # ----------------------------------------------------------------------
 def build_index(app, *args, **kwargs) -> None:
     """"""
-    requirements = os.path.abspath(os.path.join(os.path.dirname(app.srcdir), 'requirements'))
+    requirements = os.path.abspath(os.path.join(
+        os.path.dirname(app.srcdir), 'requirements'))
     write_file(requirements, REQUIREMENTS)
 
     notebooks_dir = 'notebooks'
@@ -103,8 +104,10 @@ def build_index(app, *args, **kwargs) -> None:
 
     if not os.path.exists(notebooks_path):
         os.makedirs(notebooks_path)
-        getting_started = os.path.join(notebooks_path, '01-getting_started.ipynb')
-        write_file(getting_started, EMPTY_NOTEBOOK.format('# Getting started'))
+        getting_started = os.path.join(
+            notebooks_path, '01-getting_started.ipynb')
+        write_file(getting_started, EMPTY_NOTEBOOK.format(
+            '# Getting started'))
 
     readme_file = os.path.join(notebooks_path, 'readme.ipynb')
     write_file(readme_file, EMPTY_NOTEBOOK.format(f'# {app.config.project}'))
@@ -119,7 +122,8 @@ def build_index(app, *args, **kwargs) -> None:
             'footer.ipynb',
             'license.ipynb',
         ] and notebook.endswith('.ipynb'):
-            notebooks.append(f"{notebooks_dir}/{notebook.replace('.ipynb', '')}")
+            notebooks.append(
+                f"{notebooks_dir}/{notebook.replace('.ipynb', '')}")
 
     dunderlab_custom_index = app.config.dunderlab_custom_index
 
@@ -211,14 +215,23 @@ Documentation Overview
 # ----------------------------------------------------------------------
 def build_features(app, *args, **kwargs) -> None:
     """"""
-    target = os.path.abspath(os.path.join(app.srcdir, '_static', 'dunderlab_custom.css'))
-    source = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css')
-    shutil.copyfile(source, target)
-    context = {
-        'dunderlab_color_links': app.config.dunderlab_color_links,
-        'dunderlab_color_links__darker': darker_color(app.config.dunderlab_color_links, 0.3),
-    }
-    format_file(target, context)
+    for dirname in ['static', 'templates']:
+        for file in os.listdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), dirname)):
+            target = os.path.abspath(os.path.join(
+                app.srcdir, f'_{dirname}', file))
+            source = os.path.join(os.path.dirname(
+                os.path.abspath(__file__)), dirname, file)
+
+            if dirname == 'templates':
+                if not os.path.exists(target):
+                    shutil.copyfile(source, target)
+            else:
+                shutil.copyfile(source, target)
+                context = {
+                    'dunderlab_color_links': app.config.dunderlab_color_links,
+                    'dunderlab_color_links__darker': darker_color(app.config.dunderlab_color_links, 0.3),
+                }
+                format_file(target, context)
 
 
 # ----------------------------------------------------------------------
@@ -236,7 +249,8 @@ def setup(app) -> dict:
     if not os.path.exists(notebooks_path):
         os.makedirs(notebooks_path)
 
-    notebooks = filter(lambda f: f.endswith('.ipynb'), os.listdir(notebooks_path))
+    notebooks = filter(lambda f: f.endswith(
+        '.ipynb'), os.listdir(notebooks_path))
     notebooks = filter(
         lambda f: not f
         in [
@@ -309,26 +323,9 @@ def setup(app) -> dict:
     app.connect('builder-inited', build_index)
     app.connect('builder-inited', build_features)
 
-    # app.config.bibtex_bibfiles = ['refs.bib']
-
-    # app.add_css_file(
-        # os.path.join(
-            # os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css'
-        # )
-    # )
-
-    if not os.path.exists(os.path.abspath(os.path.join(app.srcdir, '_static'))):
-        os.mkdir(os.path.abspath(os.path.join(app.srcdir, '_static')))
-
-    # target = os.path.abspath(os.path.join(app.srcdir, '_static', 'dunderlab_custom.css'))
-    # source = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'dunderlab_custom.css')
-    # shutil.copyfile(source, target)
-
-    # context = {
-        # 'dunderlab_color_links': app.config.dunderlab_color_links,
-        # 'dunderlab_color_links__darker': darker_color(app.config.dunderlab_color_links, 0.3),
-    # }
-    # format_file(target, context)
+    for dirname in ['_static', '_templates']:
+        if not os.path.exists(os.path.abspath(os.path.join(app.srcdir, dirname))):
+            os.mkdir(os.path.abspath(os.path.join(app.srcdir, dirname)))
 
     app.add_css_file('dunderlab_custom.css')
 

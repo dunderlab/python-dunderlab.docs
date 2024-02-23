@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
 import os
+import sys
 import argparse
 import webbrowser
+
+CWD = os.getcwd()
 
 
 # ----------------------------------------------------------------------
@@ -24,13 +27,15 @@ def parse_arguments() -> argparse.Namespace:
     >>> args = parse_arguments()
     >>> print(args.args)
     """
-    parser = argparse.ArgumentParser(description='Docker Sphinx Documentation Helper')
-    parser.add_argument('args', nargs='*', help='Arguments for commands: [command, module/dir, format/port]')
+    parser = argparse.ArgumentParser(
+        description='Docker Sphinx Documentation Helper')
+    parser.add_argument(
+        'args', nargs='*', help='Arguments for commands: [command, module/dir, format/port]')
     return parser.parse_args()
 
 
 # ----------------------------------------------------------------------
-def run_docker_command(image: str, command: str, volumes: str) -> None:
+def run_docker_command(image: str, command: str, volumes: str, arguments: str = '') -> None:
     """
     Execute a Docker command with specified parameters.
 
@@ -50,11 +55,6 @@ def run_docker_command(image: str, command: str, volumes: str) -> None:
     -------
     >>> run_docker_command("python:3.8", "echo Hello, World!", "/myhostpath:/mycontainerpath")
     """
-    try:
-        args = parse_arguments().args
-        arguments = args[1]
-    except:
-        arguments = ''
 
     instruction = f"docker run --rm -u $(id -u):$(id -g) {volumes} {image} {command} {arguments}"
     print(f'Running: {instruction}')
@@ -83,7 +83,13 @@ def main():
             os.mkdir('docs')
 
         if command == 'quickstart':
-            run_docker_command(image, 'sphinx-quickstart', f'-v ./docs:/mnt/docs -w /mnt/docs')
+            try:
+                args = parse_arguments().args
+                arguments = args[1]
+            except:
+                arguments = ''
+            run_docker_command(image, 'sphinx-quickstart',
+                               f'-v {CWD}/docs:/mnt/docs -w /mnt/docs', arguments=arguments)
 
         elif command == 'apidoc':
             handle_apidoc_command(args, image)
@@ -112,7 +118,8 @@ def handle_apidoc_command(args: list[str], image: str) -> None:
     """
     if len(args) > 1:
         module = args[1]
-        run_docker_command(image, f'sphinx-apidoc -fMeETl -o source/_modules ../{module}', f'-v ./docs:/mnt/docs -v ./:/mnt -w /mnt/docs')
+        run_docker_command(
+            image, f'sphinx-apidoc -fMeETl -t source/_templates -o source/_modules ../{module}', f'-v {CWD}/docs:/mnt/docs -v {CWD}:/mnt -w /mnt/docs')
     else:
         print('Module name must be specified for apidoc.')
 
@@ -131,10 +138,9 @@ def handle_build_command(args: list[str], image: str) -> None:
     """
     if len(args) > 2:
         format_, module = args[1], args[2]
-        if format_ == 'latexpdf':
-            run_docker_command('sphinxdoc/sphinx-latexpdf', 'sphinx-build -M latexpdf source build', f'-v .:/mnt -w /mnt/docs')
-        elif format_ in ['html', 'epub']:
-            run_docker_command(image, f'sphinx-build -M {format_} source build', f'-v ./:/mnt -w /mnt/docs')
+        if format_ in ['html', 'epub', 'latexpdf', 'clean']:
+            run_docker_command(
+                image, f'make {format_}', f'-v {CWD}:/mnt -w /mnt/docs')
         else:
             print('Invalid output format specified for build.')
     else:
