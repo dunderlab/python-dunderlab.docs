@@ -13,6 +13,7 @@ Documentation Overview
    notebooks/01-sphinx
    notebooks/02-docker
    notebooks/03-read_the_docs
+   notebooks/04-github_workflow
 
 
 

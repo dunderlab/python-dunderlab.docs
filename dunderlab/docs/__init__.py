@@ -328,6 +328,7 @@ def setup(app) -> dict:
             os.mkdir(os.path.abspath(os.path.join(app.srcdir, dirname)))
 
     app.add_css_file('dunderlab_custom.css')
+    app.add_css_file('roboto_font.css')
 
     return {
         'version': __version__,
