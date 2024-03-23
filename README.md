@@ -123,3 +123,5 @@ sys.path.insert(0, os.path.abspath('relative_path_to_module'))
 **If images aren't visible in the readmereadme.md file:**  
 Verify their paths to ensure they're accessible from the GitHub repository. Relative paths must be correctly set relative to the `README.md` file's location.  
 The images used in the `readme.ipynb` notebook should be placed in a folder called `_images`.
+
+![test_image](https://github.com/dunderlab/python-dunderlab.docs/raw/main/docs/source/notebooks/_images/test.png)

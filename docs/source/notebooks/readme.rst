@@ -186,3 +186,8 @@ Troubleshooting
   ``README.md`` file’s location.
 | The images used in the ``readme.ipynb`` notebook should be placed in a
   folder called ``_images``.
+
+.. figure:: _images/test.png
+   :alt: test_image
+
+   test_image

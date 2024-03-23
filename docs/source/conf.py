@@ -51,3 +51,4 @@ html_theme_options = {
 
 dunderlab_color_links = '#FC4DB5'
 dunderlab_code_reference = True
+dunderlab_github_repository = "https://github.com/dunderlab/python-dunderlab.docs"
