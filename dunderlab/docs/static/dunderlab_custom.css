@@ -32,42 +32,21 @@ a.reference:hover {{
     color: {dunderlab_color_links__darker};
 }}
 
-
-
 h1 {{
     margin: 30px 0px 10px 0px !important;
 }}
-
 
 .body {{
     max-width: unset !important;
 }}
 
-
 img.logo {{
-
     width: 210px;
-
 }}
-
 
 div.note {{
     background-color: #00ACC117;
     border: 1px solid #00ACC15C;
-}}
-
-
-
-dl:not(.docutils) dt {{
-        margin: 6px 0;
-        margin-top: 6px;
-        font-size: 90%;
-        line-height: normal;
-        background: #00ACC117;
-        color: #555;
-        border-top: solid 3px #00ACC15C;
-        padding: 6px;
-        font-family: mono;
 }}
 
 dl:not(.docutils) tt,
@@ -114,3 +93,41 @@ dl:not(.docutils) dl dt {{
     border-width: 3px 0 0 0;
     border-radius: 5px;
 }}
+
+dl:not(.docutils) dl dt {{
+    font-family: mono, monospace;
+}}
+
+dl.field-list.simple .field-odd,
+dl.field-list.simple .field-even {{
+    background-color: #fff0;
+    border-left: none;
+}}
+
+dl.field-list.simple .field-even + .field-even,
+dl.field-list.simple .field-odd + .field-odd {{
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+}}
+
+dl.py.method {{
+    margin-bottom: 32px;
+}}
+
+dl.py.class {{
+    margin-bottom: 64px;
+}}
+
+dl:not(.docutils) dt {{
+    margin: 6px 0;
+    margin-top: 6px;
+    font-size: 90%;
+    line-height: normal;
+    background: #00ACC117;
+    color: #555;
+    border-top: solid 3px #00ACC15C;
+    padding: 6px;
+    font-family: mono, monospace;
+}}
+
