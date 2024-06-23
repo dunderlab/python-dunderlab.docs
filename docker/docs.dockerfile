@@ -11,7 +11,7 @@ LABEL license="BSD 2-Clause"
 WORKDIR /mnt
 
 RUN apt-get update && apt-get install -y pandoc
-RUN python3 -m pip install 'dunderlab-docs>=1.13' \
+RUN python3 -m pip install 'dunderlab-docs>=1.14' \
                            nbsphinx \
                            sphinx \
                            ipython \
