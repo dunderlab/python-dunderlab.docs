@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='dunderlab-docs',
-    version='1.13',
+    version='1.14',
     packages=['dunderlab.docs', 'dunderlab.docs.static'],
     author='Yeison Cardona',
     author_email='yencardonaal@unal.edu.co',
