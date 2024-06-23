@@ -92,7 +92,12 @@ def main():
                                f'-v {CWD}/docs:/mnt/docs -w /mnt/docs', arguments=arguments)
 
         elif command == 'apidoc':
-            handle_apidoc_command(args, image)
+            try:
+                args = parse_arguments().args
+                apidoc_options = args[2]
+            except:
+                apidoc_options = 'members,undoc-members,show-inheritance'
+            handle_apidoc_command(args, image, apidoc_options)
 
         elif command == 'build':
             handle_build_command(args, image)
@@ -105,7 +110,7 @@ def main():
 
 
 # ----------------------------------------------------------------------
-def handle_apidoc_command(args: list[str], image: str) -> None:
+def handle_apidoc_command(args: list[str], image: str, apidoc_options: str = '') -> None:
     """
     Handle 'apidoc' command for Sphinx documentation.
 
@@ -119,7 +124,10 @@ def handle_apidoc_command(args: list[str], image: str) -> None:
     if len(args) > 1:
         module = args[1]
         run_docker_command(
-            image, f'sphinx-apidoc -fMeETl -t source/_templates -o source/_modules ../{module}', f'-v {CWD}/docs:/mnt/docs -v {CWD}:/mnt -w /mnt/docs')
+            image,
+            f'sphinx-apidoc -fMeETl -t source/_templates -o source/_modules ../{module}',
+            f"-v {CWD}/docs:/mnt/docs -v {CWD}:/mnt -w /mnt/docs -e SPHINX_APIDOC_OPTIONS='{apidoc_options}'",
+        )
     else:
         print('Module name must be specified for apidoc.')
 
