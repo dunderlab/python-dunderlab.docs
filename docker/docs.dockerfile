@@ -1,7 +1,7 @@
 FROM sphinxdoc/sphinx
 
 LABEL image="dunderlab/docs"
-LABEL version="1.7"
+LABEL version="1.8"
 LABEL maintainer="yencardonaal@unal.edu.co"
 LABEL description=""
 LABEL project=""
@@ -11,8 +11,9 @@ LABEL license="BSD 2-Clause"
 WORKDIR /mnt
 
 RUN apt-get update && apt-get install -y pandoc
-RUN python3 -m pip install 'dunderlab-docs>=1.14' \
+RUN python3 -m pip install 'dunderlab-docs>=1.15' \
                            nbsphinx \
+                           jupytext \
                            sphinx \
                            ipython \
                            'urllib3<2.0' \

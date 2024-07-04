@@ -13,10 +13,12 @@
 {%- endfor %}
 {%- endmacro %}
 
+{% if show_headings %}
 {%- if is_namespace %}
 {{- [pkgname, "namespace"] | join(" ") | e | heading }}
 {% else %}
 {{- [pkgname, "package"] | join(" ") | e | heading }}
+{% endif %}
 {% endif %}
 
 {%- if is_namespace %}

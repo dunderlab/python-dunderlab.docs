@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='dunderlab-docs',
-    version='1.14',
+    version='1.15',
     packages=['dunderlab.docs', 'dunderlab.docs.static'],
     author='Yeison Cardona',
     author_email='yencardonaal@unal.edu.co',
@@ -17,6 +17,7 @@ setup(
     download_url='',
     install_requires=[
         'nbsphinx',
+        'jupytext',
         # 'sphinx==7.0.0',
         # 'urllib3<2.0',
         'sphinx',

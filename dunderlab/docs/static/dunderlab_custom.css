@@ -116,7 +116,7 @@ dl.py.method {{
 }}
 
 dl.py.class {{
-    margin-bottom: 64px;
+    margin-top: 64px;
 }}
 
 dl:not(.docutils) dt {{
