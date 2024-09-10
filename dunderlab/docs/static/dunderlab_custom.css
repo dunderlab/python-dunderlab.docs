@@ -119,6 +119,12 @@ dl.py.class {{
     margin-top: 64px;
 }}
 
+li.toctree-l1 {{
+    margin-bottom: 16px;
+}}
+
+
+
 dl:not(.docutils) dt {{
     margin: 6px 0;
     margin-top: 6px;
