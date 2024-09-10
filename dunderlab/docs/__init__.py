@@ -102,6 +102,8 @@ def build_index(app, *args, **kwargs) -> None:
     notebooks_dir = 'notebooks'
     notebooks_path = os.path.abspath(os.path.join(app.srcdir, notebooks_dir))
 
+    run_command(f'jupytext --to ipynb {notebooks_path}/*.pct.py --update')
+
     if not os.path.exists(notebooks_path):
         os.makedirs(notebooks_path)
         getting_started = os.path.join(
