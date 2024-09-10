@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dunderlab-docs"
+version = "1.18"
+description = ""
+readme = "README.md"
+authors = [
+    { name = "Yeison Cardona", email = "yencardonaal@unal.edu.co" }
+]
+maintainers = [
+    { name = "Yeison Cardona", email = "yencardonaal@unal.edu.co" }
+]
+license = { text = "Simplified BSD License" }
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Hardware :: Hardware Drivers"
+]
+
+dependencies = [
+        "nbsphinx",
+        "jupytext",
+        "sphinx",
+        "urllib3",
+        "ipython",
+        "ipykernel",
+        "sphinxcontrib-bibtex",
+        "pygments",
+    ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dunderlab"]
+
+[project.scripts]
+dunderlab_docs = "dunderlab.docs.scripts.dunderlab_docs:main"
