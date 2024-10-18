@@ -4,6 +4,7 @@ Dunderlab - Documentation
 =========================
 
 """
+
 import os
 import shutil
 import subprocess
@@ -95,8 +96,9 @@ def darker_color(color, darker_factor):
 # ----------------------------------------------------------------------
 def build_index(app, *args, **kwargs) -> None:
     """"""
-    requirements = os.path.abspath(os.path.join(
-        os.path.dirname(app.srcdir), 'requirements'))
+    requirements = os.path.abspath(
+        os.path.join(os.path.dirname(app.srcdir), 'requirements')
+    )
     write_file(requirements, REQUIREMENTS)
 
     notebooks_dir = 'notebooks'
@@ -107,9 +109,11 @@ def build_index(app, *args, **kwargs) -> None:
     if not os.path.exists(notebooks_path):
         os.makedirs(notebooks_path)
         getting_started = os.path.join(
-            notebooks_path, '01-getting_started.ipynb')
-        write_file(getting_started, EMPTY_NOTEBOOK.format(
-            '# Getting started'))
+            notebooks_path, '01-getting_started.ipynb'
+        )
+        write_file(
+            getting_started, EMPTY_NOTEBOOK.format('# Getting started')
+        )
 
     readme_file = os.path.join(notebooks_path, 'readme.ipynb')
     write_file(readme_file, EMPTY_NOTEBOOK.format(f'# {app.config.project}'))
@@ -125,7 +129,8 @@ def build_index(app, *args, **kwargs) -> None:
             'license.ipynb',
         ] and notebook.endswith('.ipynb'):
             notebooks.append(
-                f"{notebooks_dir}/{notebook.replace('.ipynb', '')}")
+                f"{notebooks_dir}/{notebook.replace('.ipynb', '')}"
+            )
 
     dunderlab_custom_index = app.config.dunderlab_custom_index
 
@@ -196,20 +201,25 @@ Documentation Overview
         run_command(
             f'jupyter-nbconvert --to markdown {os.path.join(notebooks_path, "license.ipynb")} --output ../../../LICENSE.md'
         )
-        run_command(
-            f'mv ../../../LICENSE.md ../../../LICENSE'
-        )
+        run_command(f'mv ../../../LICENSE.md ../../../LICENSE')
 
     run_command(
         f'jupyter-nbconvert --to markdown {os.path.join(notebooks_path, "readme.ipynb")} --output ../../../README.md'
     )
 
-    if app.config.dunderlab_github_repository and os.path.exists('../README.md'):
+    if app.config.dunderlab_github_repository and os.path.exists(
+        '../README.md'
+    ):
 
         with open('../README.md', 'r') as file:
             content = file.read()
+        # content = content.replace(
+        #     '(_images/', f'({app.config.dunderlab_github_repository}/raw/main/docs/source/notebooks/_images/')
         content = content.replace(
-            '(_images/', f'({app.config.dunderlab_github_repository}/raw/main/docs/source/notebooks/_images/')
+            '(_images/',
+            f'({app.config.dunderlab_github_repository.replace("github.com", "raw.githubusercontent.com")}/master/docs/source/notebooks/_images/',
+        )
+
         with open('../README.md', 'w') as file:
             file.write(content)
 
@@ -218,11 +228,15 @@ Documentation Overview
 def build_features(app, *args, **kwargs) -> None:
     """"""
     for dirname in ['static', 'templates']:
-        for file in os.listdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), dirname)):
-            target = os.path.abspath(os.path.join(
-                app.srcdir, f'_{dirname}', file))
-            source = os.path.join(os.path.dirname(
-                os.path.abspath(__file__)), dirname, file)
+        for file in os.listdir(
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), dirname)
+        ):
+            target = os.path.abspath(
+                os.path.join(app.srcdir, f'_{dirname}', file)
+            )
+            source = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)), dirname, file
+            )
 
             if dirname == 'templates':
                 if not os.path.exists(target):
@@ -231,7 +245,9 @@ def build_features(app, *args, **kwargs) -> None:
                 shutil.copyfile(source, target)
                 context = {
                     'dunderlab_color_links': app.config.dunderlab_color_links,
-                    'dunderlab_color_links__darker': darker_color(app.config.dunderlab_color_links, 0.3),
+                    'dunderlab_color_links__darker': darker_color(
+                        app.config.dunderlab_color_links, 0.3
+                    ),
                 }
                 format_file(target, context)
 
@@ -251,8 +267,9 @@ def setup(app) -> dict:
     if not os.path.exists(notebooks_path):
         os.makedirs(notebooks_path)
 
-    notebooks = filter(lambda f: f.endswith(
-        '.ipynb'), os.listdir(notebooks_path))
+    notebooks = filter(
+        lambda f: f.endswith('.ipynb'), os.listdir(notebooks_path)
+    )
     notebooks = filter(
         lambda f: not f
         in [
@@ -326,7 +343,9 @@ def setup(app) -> dict:
     app.connect('builder-inited', build_features)
 
     for dirname in ['_static', '_templates']:
-        if not os.path.exists(os.path.abspath(os.path.join(app.srcdir, dirname))):
+        if not os.path.exists(
+            os.path.abspath(os.path.join(app.srcdir, dirname))
+        ):
             os.mkdir(os.path.abspath(os.path.join(app.srcdir, dirname)))
 
     app.add_css_file('dunderlab_custom.css')
