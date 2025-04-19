@@ -17,8 +17,8 @@ sys.path.insert(0, os.path.abspath('../../dunderlab'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "DunderLab's Documentation Guide"
-copyright = '2022, Yeison Cardona'
+project = 'DunderLab\'s Documentation Guide'
+copyright = '2025, Yeison Cardona'
 author = 'Yeison Cardona'
 
 # -- General configuration ---------------------------------------------------
