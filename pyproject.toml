@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dunderlab-docs"
-version = "1.19"
-description = ""
+version = "1.20"
+description = "A documentation toolkit that integrates Sphinx and Jupyter tools, designed to streamline the creation of scientific and technical documentation with support for Jupytext, nbsphinx, and customizable themes."
 readme = "README.md"
 authors = [
     { name = "Yeison Cardona", email = "yencardonaal@unal.edu.co" }
