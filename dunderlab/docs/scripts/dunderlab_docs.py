@@ -169,7 +169,7 @@ def handle_server_command(args: list[str]) -> None:
         port = args[1]
         os.chdir(os.path.join('docs', 'build', 'html'))
         webbrowser.open_new_tab(f'http://localhost:{port}/index.html')
-        os.system(f"python -m http.server {port}")
+        os.system(f"python3 -m http.server {port}")
     else:
         print('Port number must be specified for server.')
 
